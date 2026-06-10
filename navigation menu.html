@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Interactive Navigation Menu</title>
+
+<style>
+body{
+    margin:0;
+    font-family:Arial, sans-serif;
+}
+
+/* Navigation Bar */
+.navbar{
+    position:fixed;
+    top:0;
+    width:100%;
+    background:#222;
+    padding:15px 0;
+    text-align:center;
+    transition:0.4s;
+}
+
+.navbar a{
+    color:white;
+    text-decoration:none;
+    margin:0 20px;
+    font-size:18px;
+    position:relative;
+    transition:0.3s;
+}
+
+/* Hover Effect */
+.navbar a:hover{
+    color:red;
+}
+
+/* Underline Animation */
+.navbar a::after{
+    content:'';
+    position:absolute;
+    left:0;
+    bottom:-5px;
+    width:0;
+    height:2px;
+    background:yellow;
+    transition:0.3s;
+}
+
+.navbar a:hover::after{
+    width:100%;
+}
+
+/* Scroll Effect */
+.navbar.active{
+    background:#0066cc;
+    box-shadow:0 2px 10px rgba(0,0,0,0.3);
+}
+
+.content{
+    margin-top:80px;
+    padding:20px;
+    height:2000px;
+    background:linear-gradient(white, lightblue);
+}
+</style>
+</head>
+
+<body>
+
+<div class="navbar" id="menu">
+    <a href="#">Home</a>
+    <a href="#">About</a>
+    <a href="#">Services</a>
+    <a href="#">Gallery</a>
+    <a href="#">Contact</a>
+</div>
+
+<div class="content">
+    <h1>Interactive Navigation Menu</h1>
+    <p>Scroll down to see the menu change color.</p>
+</div>
+
+<script>
+window.onscroll = function() {
+    let menu = document.getElementById("menu");
+
+    if(window.scrollY > 100){
+        menu.classList.add("active");
+    } else {
+        menu.classList.remove("active");
+    }
+};
+</script>
+
+</body>
+</html>
