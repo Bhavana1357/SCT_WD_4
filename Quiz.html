@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Quiz Game</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Poppins',sans-serif;
+}
+
+body{
+display:flex;
+justify-content:center;
+align-items:center;
+height:100vh;
+background:linear-gradient(135deg,#4facfe,#00f2fe);
+}
+
+.container{
+width:550px;
+background:white;
+padding:30px;
+border-radius:20px;
+box-shadow:0 10px 20px rgba(0,0,0,0.3);
+}
+
+h1{
+text-align:center;
+color:#6a0dad;
+margin-bottom:20px;
+}
+
+#number{
+text-align:right;
+color:#555;
+margin-bottom:10px;
+font-weight:bold;
+}
+
+#question{
+font-size:24px;
+font-weight:600;
+margin-bottom:20px;
+color:#222;
+}
+
+.option{
+background:#f2f2f2;
+padding:12px;
+margin:10px 0;
+border-radius:10px;
+cursor:pointer;
+transition:0.3s;
+border:2px solid transparent;
+}
+
+.option:hover{
+background:#d6e4ff;
+border-color:#4facfe;
+transform:translateX(5px);
+}
+
+.selected{
+background:#6a0dad;
+color:white;
+}
+
+button{
+width:100%;
+padding:12px;
+margin-top:20px;
+border:none;
+border-radius:10px;
+background:#ff6b6b;
+color:white;
+font-size:18px;
+font-weight:bold;
+cursor:pointer;
+transition:.3s;
+}
+
+button:hover{
+background:#ff4757;
+}
+
+#result{
+text-align:center;
+font-size:26px;
+margin-top:20px;
+color:green;
+font-weight:bold;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>🎯 Quiz Game</h1>
+
+<div id="number"></div>
+
+<div id="question"></div>
+
+<div id="options"></div>
+
+<button onclick="nextQuestion()">Next</button>
+
+<div id="result"></div>
+
+</div>
+
+<script>
+
+const questions=[
+
+{
+q:"What does HTML stand for?",
+o:["Hyper Text Markup Language","High Text Machine Language","Home Tool Markup Language","Hyper Transfer Language"],
+a:0
+},
+
+{
+q:"Which language is used for styling web pages?",
+o:["Java","Python","CSS","C++"],
+a:2
+},
+
+{
+q:"Which language is used to make web pages interactive?",
+o:["JavaScript","SQL","C","PHP"],
+a:0
+},
+
+{
+q:"Which tag creates the largest heading?",
+o:["<h6>","<head>","<h1>","<title>"],
+a:2
+},
+
+{
+q:"Which company originally developed Java?",
+o:["Google","Microsoft","Sun Microsystems","IBM"],
+a:2
+}
+
+];
+
+let current=0;
+let score=0;
+let selected=-1;
+
+function loadQuestion(){
+
+selected=-1;
+
+document.getElementById("number").innerHTML=
+"Question "+(current+1)+" of "+questions.length;
+
+document.getElementById("question").innerHTML=
+questions[current].q;
+
+let data="";
+
+for(let i=0;i<questions[current].o.length;i++){
+
+data+=`<div class="option" onclick="selectOption(this,${i})">
+${questions[current].o[i]}
+</div>`;
+
+}
+
+document.getElementById("options").innerHTML=data;
+
+}
+
+function selectOption(element,index){
+
+selected=index;
+
+let all=document.querySelectorAll(".option");
+
+all.forEach(item=>item.classList.remove("selected"));
+
+element.classList.add("selected");
+
+}
+
+function nextQuestion(){
+
+if(selected==-1){
+
+alert("Please select an option!");
+
+return;
+
+}
+
+if(selected==questions[current].a){
+
+score++;
+
+}
+
+current++;
+
+if(current<questions.length){
+
+loadQuestion();
+
+}
+else{
+
+document.getElementById("question").style.display="none";
+document.getElementById("options").style.display="none";
+document.querySelector("button").innerHTML="Restart Quiz";
+document.querySelector("button").onclick=restartQuiz;
+
+document.getElementById("number").innerHTML="";
+
+document.getElementById("result").innerHTML=
+"🏆 Your Score: "+score+" / "+questions.length;
+
+}
+
+}
+
+function restartQuiz(){
+
+current=0;
+score=0;
+
+document.getElementById("question").style.display="block";
+document.getElementById("options").style.display="block";
+document.getElementById("result").innerHTML="";
+
+document.querySelector("button").innerHTML="Next";
+document.querySelector("button").onclick=nextQuestion;
+
+loadQuestion();
+
+}
+
+loadQuestion();
+
+</script>
+
+</body>
+</html>
